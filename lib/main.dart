@@ -10,10 +10,10 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'app.dart';
 
-void main() async {
+void main() async { 
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  
+
   await initializeDateFormatting();
   // Настройка часовых поясов
   tz.initializeTimeZones();
@@ -27,4 +27,5 @@ void main() async {
   runApp(const App());
 }
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();

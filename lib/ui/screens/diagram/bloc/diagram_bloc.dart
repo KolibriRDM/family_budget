@@ -14,13 +14,14 @@ import 'package:family_budget/helpers/mixins/state_saver_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
-
 part 'diagram_event.dart';
 part 'diagram_state.dart';
 
-
 @injectable
-class DiagramBloc extends Bloc<DiagramEvent, DiagramState> with ErrorHandlerMixin<DiagramEvent, DiagramState>, StateSaverMixin<DiagramEvent, DiagramState> {
+class DiagramBloc extends Bloc<DiagramEvent, DiagramState>
+    with
+        ErrorHandlerMixin<DiagramEvent, DiagramState>,
+        StateSaverMixin<DiagramEvent, DiagramState> {
   DiagramBloc(this.prefs, this.userRepository, this.expenseRepository)
       : super(DiagramLoadingState()) {
     on<DiagramInitialEvent>(_onInitialEvent);
@@ -30,8 +31,7 @@ class DiagramBloc extends Bloc<DiagramEvent, DiagramState> with ErrorHandlerMixi
     on<DiagramSelectTypeViewEvent>(_onSelectTypeViewEvent);
     on<DiagramSetCustomPeriodEvent>(_onSetCustomPeriodEvent);
   }
-  
-  
+
   final UserRepository userRepository;
   final ExpenseRepository expenseRepository;
   final Preferences prefs;
@@ -40,7 +40,8 @@ class DiagramBloc extends Bloc<DiagramEvent, DiagramState> with ErrorHandlerMixi
   int type = 1;
   ({DateTime dateFrom, DateTime dateTo})? customPeriod;
 
-  Future<void> _onInitialEvent(DiagramInitialEvent event, Emitter<DiagramState> emit) async {
+  Future<void> _onInitialEvent(
+      DiagramInitialEvent event, Emitter<DiagramState> emit) async {
     emit(DiagramLoadingState());
 
     try {
@@ -52,7 +53,8 @@ class DiagramBloc extends Bloc<DiagramEvent, DiagramState> with ErrorHandlerMixi
     }
   }
 
-  Future<void> _onInitEditExpenseEvent(DiagramInitEditExpenseEvent event, Emitter<DiagramState> emit) async {
+  Future<void> _onInitEditExpenseEvent(
+      DiagramInitEditExpenseEvent event, Emitter<DiagramState> emit) async {
     emit(DiagramLoadingState());
     try {
       final newState = DiagramEditExpenseState(expense: event.expense);
@@ -62,7 +64,8 @@ class DiagramBloc extends Bloc<DiagramEvent, DiagramState> with ErrorHandlerMixi
     }
   }
 
-  Future<void> _onEditExpenseEvent(DiagramEditExpenseEvent event, Emitter<DiagramState> emit) async {
+  Future<void> _onEditExpenseEvent(
+      DiagramEditExpenseEvent event, Emitter<DiagramState> emit) async {
     emit(DiagramLoadingState());
     try {
       await expenseRepository.updateExpense(
@@ -78,7 +81,8 @@ class DiagramBloc extends Bloc<DiagramEvent, DiagramState> with ErrorHandlerMixi
     }
   }
 
-  Future<void> _onDeleteExpenseEvent(DiagramDeleteExpenseEvent event, Emitter<DiagramState> emit) async {
+  Future<void> _onDeleteExpenseEvent(
+      DiagramDeleteExpenseEvent event, Emitter<DiagramState> emit) async {
     emit(DiagramLoadingState());
     try {
       await expenseRepository.delete(event.expenseId);
@@ -89,7 +93,8 @@ class DiagramBloc extends Bloc<DiagramEvent, DiagramState> with ErrorHandlerMixi
     }
   }
 
-  Future<void> _onSelectTypeViewEvent(DiagramSelectTypeViewEvent event, Emitter<DiagramState> emit) async {
+  Future<void> _onSelectTypeViewEvent(
+      DiagramSelectTypeViewEvent event, Emitter<DiagramState> emit) async {
     emit(DiagramLoadingState());
     try {
       type = event.type;
@@ -103,7 +108,8 @@ class DiagramBloc extends Bloc<DiagramEvent, DiagramState> with ErrorHandlerMixi
     }
   }
 
-  Future<void> _onSetCustomPeriodEvent(DiagramSetCustomPeriodEvent event, Emitter<DiagramState> emit) async {
+  Future<void> _onSetCustomPeriodEvent(
+      DiagramSetCustomPeriodEvent event, Emitter<DiagramState> emit) async {
     emit(DiagramLoadingState());
     try {
       type = 3;
@@ -169,11 +175,11 @@ class DiagramBloc extends Bloc<DiagramEvent, DiagramState> with ErrorHandlerMixi
   }
 
   void _emitInitialState(
-      Emitter<DiagramState> emit,
-      List<ExpenseModel> expenses,
-      int type,
-      AnalyticsData analytics,
-      ) {
+    Emitter<DiagramState> emit,
+    List<ExpenseModel> expenses,
+    int type,
+    AnalyticsData analytics,
+  ) {
     final newState = DiagramInitialState(
       currency: _curUser!.currency!,
       expensesList: expenses,
@@ -184,17 +190,19 @@ class DiagramBloc extends Bloc<DiagramEvent, DiagramState> with ErrorHandlerMixi
   }
 
   @override
-  DiagramState createErrorState({required String message, required PageState pageState}) {
+  DiagramState createErrorState(
+      {required String message, required PageState pageState}) {
     return DiagramInfoState(message: message, pageState: pageState);
   }
-  
+
   /// Получает диапазон дат в зависимости от выбранного типа
   ({DateTime dateFrom, DateTime dateTo}) _getDateRange(int type) {
     final now = DateTime.now();
     return switch (type) {
       1 => (dateFrom: now, dateTo: now),
       2 => (dateFrom: now.subtract(const Duration(days: 7)), dateTo: now),
-      3 => customPeriod ?? (dateFrom: now.subtract(const Duration(days: 30)), dateTo: now),
+      3 => customPeriod ??
+          (dateFrom: now.subtract(const Duration(days: 30)), dateTo: now),
       _ => (dateFrom: now, dateTo: now),
     };
   }

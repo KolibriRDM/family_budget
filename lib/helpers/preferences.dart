@@ -32,7 +32,7 @@ class Preferences {
 
   void getLocale() async {
     final locale = getStringByKey(Keys.locale);
-    if(locale != null) {
+    if (locale != null) {
       LocaleSettings.setLocaleRaw(locale);
     }
   }
@@ -85,8 +85,5 @@ class Preferences {
     return await _prefs.remove(key);
   }
 
-  // Метод для сохранения выбранной локали
-  Future<void> setLocale(String locale) async {
-    await _prefs.setString(Keys.locale, locale);
-  }
+  Future<void> setLocale(String locale) => saveLocale(locale);
 }

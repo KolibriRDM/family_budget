@@ -40,6 +40,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:family_budget/ui/navigator/cubit/navigator_cubit.dart';
 import 'package:family_budget/ui/screens/auth/screen.dart';
 import 'package:family_budget/ui/screens/calculator/screen.dart';
+import 'package:family_budget/ui/screens/credit_simulator/screen.dart';
 import 'package:family_budget/ui/screens/diagram/screen.dart';
 import 'package:family_budget/ui/screens/profile/screen.dart';
 import 'package:family_budget/ui/screens/root_screen.dart';
@@ -77,7 +78,9 @@ class AppRouter extends RootStackRouter {
             AutoRoute(
               page: CalculatorRoute.page,
             ),
-            AutoRoute(page: DiagramRoute.page, guards: [_authGuard], initial: true),
+            AutoRoute(page: CreditSimulatorRoute.page, guards: [_authGuard]),
+            AutoRoute(
+                page: DiagramRoute.page, guards: [_authGuard], initial: true),
             AutoRoute(page: ProfileRoute.page, guards: [_authGuard]),
           ],
         ),
@@ -110,20 +113,23 @@ Route<T> _tabRouteBuilder<T>(
       final begin = isForward ? Offset(1.0, 0.0) : Offset(-1.0, 0.0);
       final end = Offset.zero;
       final slideCurve = Curves.easeInOut;
-      var slideTween = Tween(begin: begin, end: end).chain(CurveTween(curve: slideCurve));
+      var slideTween =
+          Tween(begin: begin, end: end).chain(CurveTween(curve: slideCurve));
       var slideAnimation = animation.drive(slideTween);
 
       // затухание
       final fadeCurve = Curves.linear;
       var fadeAnimation = CurvedAnimation(parent: animation, curve: fadeCurve);
-      var fadeOutAnimation = CurvedAnimation(parent: secondaryAnimation, curve: fadeCurve);
+      var fadeOutAnimation =
+          CurvedAnimation(parent: secondaryAnimation, curve: fadeCurve);
 
       return SlideTransition(
         position: slideAnimation,
         child: FadeTransition(
           opacity: fadeAnimation,
           child: FadeTransition(
-            opacity: Tween<double>(begin: 1.0, end: 0.0).animate(fadeOutAnimation),
+            opacity:
+                Tween<double>(begin: 1.0, end: 0.0).animate(fadeOutAnimation),
             child: child,
           ),
         ),

@@ -94,6 +94,3 @@ class RootScaffold extends StatelessWidget {
     );
   }
 }
-
-
-

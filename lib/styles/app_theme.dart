@@ -70,12 +70,10 @@ abstract class AppTheme {
       fontWeight: FontWeight.w600,
       color: AppColors.white,
     ),
-
     headlineLarge: TextStyle(
       fontSize: 20,
       color: AppColors.white,
     ),
-
     titleLarge: _createTextStyle(
       fontSize: 19,
       fontWeight: FontWeight.normal,
@@ -91,7 +89,6 @@ abstract class AppTheme {
       fontWeight: FontWeight.w400,
       color: AppColors.white,
     ),
-
     bodyLarge: _createTextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w500,
@@ -108,7 +105,6 @@ abstract class AppTheme {
       fontWeight: FontWeight.w400,
       color: AppColors.white,
     ),
-
     labelLarge: _createTextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w800,
@@ -142,12 +138,10 @@ abstract class AppTheme {
       fontWeight: FontWeight.w600,
       color: AppColors.black,
     ),
-
     headlineLarge: TextStyle(
       fontSize: 20,
       color: AppColors.black,
     ),
-
     titleLarge: _createTextStyle(
       fontSize: 19,
       fontWeight: FontWeight.normal,
@@ -163,7 +157,6 @@ abstract class AppTheme {
       fontWeight: FontWeight.w400,
       color: AppColors.black,
     ),
-
     bodyLarge: _createTextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w500,
@@ -180,7 +173,6 @@ abstract class AppTheme {
       fontWeight: FontWeight.w400,
       color: AppColors.black,
     ),
-
     labelLarge: _createTextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w800,
@@ -253,10 +245,14 @@ abstract class AppTheme {
       showUnselectedLabels: true,
       backgroundColor: AppColors.colorScheme.onBackground,
       type: BottomNavigationBarType.fixed,
-      selectedLabelStyle:
-          _createTextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.colorScheme.outline),
-      unselectedLabelStyle:
-          _createTextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.colorScheme.secondary),
+      selectedLabelStyle: _createTextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: AppColors.colorScheme.outline),
+      unselectedLabelStyle: _createTextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: AppColors.colorScheme.secondary),
       selectedItemColor: AppColors.colorScheme.secondary,
       unselectedItemColor: AppColors.colorScheme.outline,
     ),
@@ -283,14 +279,17 @@ abstract class AppTheme {
       yearBackgroundColor: MaterialStateProperty.all(AppColors.background),
       cancelButtonStyle: TextButton.styleFrom(
         foregroundColor: AppColors.colorScheme.primary,
-        textStyle: _textTheme.headlineSmall?.copyWith(color: AppColors.colorScheme.primary),
+        textStyle: _textTheme.headlineSmall
+            ?.copyWith(color: AppColors.colorScheme.primary),
       ),
       confirmButtonStyle: TextButton.styleFrom(
         foregroundColor: AppColors.colorScheme.primary,
-        textStyle: _textTheme.headlineSmall?.copyWith(color: AppColors.colorScheme.primary),
+        textStyle: _textTheme.headlineSmall
+            ?.copyWith(color: AppColors.colorScheme.primary),
       ),
       surfaceTintColor: Colors.transparent,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius)),
+      shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius)),
     ),
   );
 }

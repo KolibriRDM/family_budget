@@ -11,7 +11,9 @@ part 'calc_state.dart';
 
 @injectable
 class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState>
-    with ErrorHandlerMixin<CalculatorEvent, CalculatorState>, StateSaverMixin<CalculatorEvent, CalculatorState> {
+    with
+        ErrorHandlerMixin<CalculatorEvent, CalculatorState>,
+        StateSaverMixin<CalculatorEvent, CalculatorState> {
   CalculatorBloc(this._currencyRepo) : super(CalculatorLoadingState()) {
     oldState = CalculatorLoadingState();
     on<CalculatorInitEvent>(_onInitialEvent);
@@ -20,14 +22,17 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState>
 
   final CurrencyRepository _currencyRepo;
 
-  Future<void> _onInitialEvent(CalculatorInitEvent event, Emitter<CalculatorState> emit) async {
+  Future<void> _onInitialEvent(
+      CalculatorInitEvent event, Emitter<CalculatorState> emit) async {
     emit(CalculatorInitState());
   }
 
-  Future<void> _onCalculateEvent(CalculateEvent event, Emitter<CalculatorState> emit) async {
+  Future<void> _onCalculateEvent(
+      CalculateEvent event, Emitter<CalculatorState> emit) async {
     emit(CalculatorLoadingState());
     try {
-      final conv = await _currencyRepo.getRate(event.count, event.first.value, event.second.value);
+      final conv = await _currencyRepo.getRate(
+          event.count, event.first.value, event.second.value);
       final answer = double.parse(conv.result.toStringAsFixed(2));
       emit(CalculatorInitState(
         first: event.first,
@@ -43,7 +48,8 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState>
   }
 
   @override
-  CalculatorState createErrorState({required String message, required PageState pageState}) {
+  CalculatorState createErrorState(
+      {required String message, required PageState pageState}) {
     return CalculatorInfoState(message: message, pageState: pageState);
   }
 }

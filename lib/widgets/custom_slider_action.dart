@@ -66,11 +66,9 @@ class SlidableAction extends StatelessWidget {
     final child = children.length == 1
         ? children.first
         : Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ...children
-      ],
-    );
+            mainAxisSize: MainAxisSize.min,
+            children: [...children],
+          );
 
     return CustomSlidableAction(
       borderRadius: borderRadius,

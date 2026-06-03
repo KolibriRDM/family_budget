@@ -23,6 +23,8 @@ mixin _$ExpenseModel {
   DateTime? get date => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_id')
   int? get userId => throw _privateConstructorUsedError;
+  bool? get hasReceipt => throw _privateConstructorUsedError;
+  ReceiptModel? get receipt => throw _privateConstructorUsedError;
 
   /// Create a copy of ExpenseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -42,7 +44,9 @@ abstract class $ExpenseModelCopyWith<$Res> {
       @JsonKey(name: 'total_count') double? totalCount,
       CategoryModel? category,
       DateTime? date,
-      @JsonKey(name: 'user_id') int? userId});
+      @JsonKey(name: 'user_id') int? userId,
+      bool? hasReceipt,
+      ReceiptModel? receipt});
 
   $CategoryModelCopyWith<$Res>? get category;
 }
@@ -67,6 +71,8 @@ class _$ExpenseModelCopyWithImpl<$Res, $Val extends ExpenseModel>
     Object? category = freezed,
     Object? date = freezed,
     Object? userId = freezed,
+    Object? hasReceipt = freezed,
+    Object? receipt = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -89,6 +95,14 @@ class _$ExpenseModelCopyWithImpl<$Res, $Val extends ExpenseModel>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int?,
+      hasReceipt: freezed == hasReceipt
+          ? _value.hasReceipt
+          : hasReceipt // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      receipt: freezed == receipt
+          ? _value.receipt
+          : receipt // ignore: cast_nullable_to_non_nullable
+              as ReceiptModel?,
     ) as $Val);
   }
 
@@ -120,7 +134,9 @@ abstract class _$$ExpenseModelImplCopyWith<$Res>
       @JsonKey(name: 'total_count') double? totalCount,
       CategoryModel? category,
       DateTime? date,
-      @JsonKey(name: 'user_id') int? userId});
+      @JsonKey(name: 'user_id') int? userId,
+      bool? hasReceipt,
+      ReceiptModel? receipt});
 
   @override
   $CategoryModelCopyWith<$Res>? get category;
@@ -144,6 +160,8 @@ class __$$ExpenseModelImplCopyWithImpl<$Res>
     Object? category = freezed,
     Object? date = freezed,
     Object? userId = freezed,
+    Object? hasReceipt = freezed,
+    Object? receipt = freezed,
   }) {
     return _then(_$ExpenseModelImpl(
       id: freezed == id
@@ -166,6 +184,14 @@ class __$$ExpenseModelImplCopyWithImpl<$Res>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int?,
+      hasReceipt: freezed == hasReceipt
+          ? _value.hasReceipt
+          : hasReceipt // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      receipt: freezed == receipt
+          ? _value.receipt
+          : receipt // ignore: cast_nullable_to_non_nullable
+              as ReceiptModel?,
     ));
   }
 }
@@ -178,7 +204,9 @@ class _$ExpenseModelImpl implements _ExpenseModel {
       @JsonKey(name: 'total_count') this.totalCount,
       this.category,
       this.date,
-      @JsonKey(name: 'user_id') this.userId});
+      @JsonKey(name: 'user_id') this.userId,
+      this.hasReceipt,
+      this.receipt});
 
   @override
   final int? id;
@@ -192,10 +220,14 @@ class _$ExpenseModelImpl implements _ExpenseModel {
   @override
   @JsonKey(name: 'user_id')
   final int? userId;
+  @override
+  final bool? hasReceipt;
+  @override
+  final ReceiptModel? receipt;
 
   @override
   String toString() {
-    return 'ExpenseModel(id: $id, totalCount: $totalCount, category: $category, date: $date, userId: $userId)';
+    return 'ExpenseModel(id: $id, totalCount: $totalCount, category: $category, date: $date, userId: $userId, hasReceipt: $hasReceipt, receipt: $receipt)';
   }
 
   @override
@@ -209,12 +241,15 @@ class _$ExpenseModelImpl implements _ExpenseModel {
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.userId, userId) || other.userId == userId));
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.hasReceipt, hasReceipt) ||
+                other.hasReceipt == hasReceipt) &&
+            (identical(other.receipt, receipt) || other.receipt == receipt));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, totalCount, category, date, userId);
+  int get hashCode => Object.hash(
+      runtimeType, id, totalCount, category, date, userId, hasReceipt, receipt);
 
   /// Create a copy of ExpenseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -231,7 +266,9 @@ abstract class _ExpenseModel implements ExpenseModel {
       @JsonKey(name: 'total_count') final double? totalCount,
       final CategoryModel? category,
       final DateTime? date,
-      @JsonKey(name: 'user_id') final int? userId}) = _$ExpenseModelImpl;
+      @JsonKey(name: 'user_id') final int? userId,
+      final bool? hasReceipt,
+      final ReceiptModel? receipt}) = _$ExpenseModelImpl;
 
   @override
   int? get id;
@@ -245,6 +282,10 @@ abstract class _ExpenseModel implements ExpenseModel {
   @override
   @JsonKey(name: 'user_id')
   int? get userId;
+  @override
+  bool? get hasReceipt;
+  @override
+  ReceiptModel? get receipt;
 
   /// Create a copy of ExpenseModel
   /// with the given fields replaced by the non-null parameter values.

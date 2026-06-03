@@ -20,6 +20,7 @@ class _RootScreenState extends State<RootScreen> {
     return [
       const DiagramRoute(),
       const CalculatorRoute(),
+      const CreditSimulatorRoute(),
       const ProfileRoute(),
     ];
   }
@@ -33,17 +34,15 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) {
-        final t = context.t;
-        return AutoRouter(
-          builder: (context, child) {
-            return RootScaffold(
-              child: child,
-            );
-          },
-        );
-      }
-    );
+    return Builder(builder: (context) {
+      final t = context.t;
+      return AutoRouter(
+        builder: (context, child) {
+          return RootScaffold(
+            child: child,
+          );
+        },
+      );
+    });
   }
 }

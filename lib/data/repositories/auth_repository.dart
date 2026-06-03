@@ -33,7 +33,8 @@ class AuthRepository {
   }
 
   Future<bool> checkLogin(String login) async {
-    final res = await _service.getMethod(path: "/auth/check-user/$login", params: {
+    final res =
+        await _service.getMethod(path: "/auth/check-user/$login", params: {
       "login": login,
     });
     return res.data == true;

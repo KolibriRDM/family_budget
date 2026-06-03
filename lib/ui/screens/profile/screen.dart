@@ -4,8 +4,10 @@ import 'package:family_budget/gen/strings.g.dart';
 import 'package:family_budget/helpers/functions.dart';
 import 'package:family_budget/styles/app_colors.dart';
 import 'package:family_budget/ui/screens/profile/bloc/profile_bloc.dart';
+import 'package:family_budget/ui/screens/receipt_scan/screen.dart';
 import 'package:family_budget/ui/screens/profile/widgets/add_expense_body.dart';
 import 'package:family_budget/ui/screens/profile/widgets/add_income_body.dart';
+import 'package:family_budget/ui/screens/profile/widgets/achievements_screen.dart';
 import 'package:family_budget/widgets/app_scaffold.dart';
 import 'package:family_budget/widgets/gif_loader.dart';
 import 'package:flutter/material.dart';
@@ -30,9 +32,20 @@ class ProfileScreen extends StatelessWidget {
         },
         builder: (context, state) {
           return switch (state) {
-            ProfileInitialState s => ProfileBody(user: s.user, incomes: s.incomesList),
+            ProfileInitialState s =>
+              ProfileBody(
+                user: s.user,
+                financialProfile: s.financialProfile,
+                incomes: s.incomesList,
+              ),
             ProfileAddIncomeState s => AddIncomeBody(income: s.income),
             ProfileAddExpenseState s => AddExpenseBody(expense: s.expense),
+            ProfileReceiptScanState _ => const ReceiptScanScreen(),
+            ProfileAchievementsState s =>
+              AchievementsScreen(
+                user: s.user,
+                achievements: s.achievements,
+              ),
             _ => _buildLoadingScaffold(theme),
           };
         },

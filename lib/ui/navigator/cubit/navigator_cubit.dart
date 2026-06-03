@@ -18,5 +18,7 @@ class NavigationCubit extends Cubit<int> {
 
   void getCalculator() => emit(1);
 
-  void getProfile() => emit(2);
+  void getDebtLoad() => emit(2);
+
+  void getProfile() => emit(3);
 }

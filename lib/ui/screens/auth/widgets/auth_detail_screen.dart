@@ -134,7 +134,9 @@ class _AuthLoginScreenState extends State<AuthDetailScreen> {
                               child: Center(
                                 child: Row(
                                   children: [
-                                    Text(currencies[index].value, style: const TextStyle(color: AppColors.background)),
+                                    Text(currencies[index].value,
+                                        style: const TextStyle(
+                                            color: AppColors.background)),
                                     const SizedBox(
                                       width: 10,
                                     ),
@@ -143,7 +145,8 @@ class _AuthLoginScreenState extends State<AuthDetailScreen> {
                                           110,
                                       child: Text(
                                         currencies[index].displayName,
-                                        style: const TextStyle(color: AppColors.background),
+                                        style: const TextStyle(
+                                            color: AppColors.background),
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
                                       ),

@@ -36,11 +36,11 @@ class IncomeRepository {
     }
   }
 
-  Future<IncomeModel> updateIncome(int incomeId, int categoryId,
-      double totalCount, DateTime date) async {
+  Future<IncomeModel> updateIncome(
+      int incomeId, int categoryId, double totalCount, DateTime date) async {
     try {
-      final res = await _service.patchMethod(
-        path: "/income/$incomeId",
+      final res = await _service.putMethod(
+        path: "/incomes/$incomeId",
         params: {
           "income_id": incomeId,
         },
@@ -59,12 +59,9 @@ class IncomeRepository {
 
   Future<void> delete(int id) async {
     try {
-      await _service.deleteMethod(
-        path: "/income/$id",
-        params: {
-          "income_id": id,
-        }
-      );
+      await _service.deleteMethod(path: "/incomes/$id", params: {
+        "income_id": id,
+      });
     } catch (e) {
       throw e;
     }

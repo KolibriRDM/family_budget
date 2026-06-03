@@ -14,8 +14,8 @@ class ApiService {
 
   Future<Response> getMethod(
       {required String path,
-        Map<String, dynamic>? params,
-        Options? options}) async {
+      Map<String, dynamic>? params,
+      Options? options}) async {
     final response = await apiClient.client.get<dynamic>(
       path,
       queryParameters: params,
@@ -34,7 +34,7 @@ class ApiService {
       options: Options(
         responseType: ResponseType.bytes,
         contentType:
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       ),
     );
     return response;
@@ -117,6 +117,31 @@ class ApiService {
   }) async {
     final Response response = await apiClient.client.delete(
       path,
+    );
+    return response;
+  }
+
+  Future<Response> createExpenseWithReceipt(Map<String, dynamic> data) async {
+    final Response response = await apiClient.client.post(
+      '/expenses/with-receipt',
+      data: data,
+    );
+    return response;
+  }
+
+  Future<Response> getExpenseReceipt(int expenseId) async {
+    final Response response = await apiClient.client.get(
+      '/expenses/$expenseId/receipt',
+    );
+    return response;
+  }
+
+  Future<Response> resolveReceiptByQr(String qrRawValue) async {
+    final Response response = await apiClient.client.post(
+      '/expenses/resolve-receipt',
+      data: {
+        'qr_raw_value': qrRawValue,
+      },
     );
     return response;
   }

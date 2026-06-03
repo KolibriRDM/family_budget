@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 506 (253 per locale)
+/// Strings: 524 (262 per locale)
 ///
-/// Built on 2025-05-20 at 20:16 UTC
+/// Built on 2026-05-22 at 09:51 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -153,6 +153,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final _StringsDiagramRu diagram = _StringsDiagramRu._(_root);
 	late final _StringsCalculatorRu calculator = _StringsCalculatorRu._(_root);
 	late final _StringsSettingsRu settings = _StringsSettingsRu._(_root);
+	late final _StringsReceiptScanRu receiptScan = _StringsReceiptScanRu._(_root);
 	late final _StringsCategoriesRu categories = _StringsCategoriesRu._(_root);
 	late final _StringsApiRu api = _StringsApiRu._(_root);
 	late final _StringsCurrencyRu currency = _StringsCurrencyRu._(_root);
@@ -297,6 +298,24 @@ class _StringsSettingsRu {
 	String get language => 'Язык';
 	String get russian => 'Русский';
 	String get english => 'English';
+}
+
+// Path: receiptScan
+class _StringsReceiptScanRu {
+	_StringsReceiptScanRu._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Сканирование чека';
+	String get cameraHint => 'Сфотографируйте чек целиком без бликов или выберите фото для теста.';
+	String get processing => 'Распознаём чек...';
+	String get scanCamera => 'Сканировать камерой';
+	String get choosePhoto => 'Выбрать фото чека';
+	String get processError => 'Не удалось обработать чек. Попробуйте другой снимок.';
+	String get qrTemporaryFailed => 'QR-код временно не удалось считать, использован текстовый разбор.';
+	String get qrNotRead => 'QR-код чека не считался, использован только текстовый разбор.';
+	String get qrItemsNotLoaded => 'Позиции по QR не загрузились, использован резервный текстовый разбор.';
 }
 
 // Path: categories
@@ -522,6 +541,7 @@ class _StringsEn implements Translations {
 	@override late final _StringsDiagramEn diagram = _StringsDiagramEn._(_root);
 	@override late final _StringsCalculatorEn calculator = _StringsCalculatorEn._(_root);
 	@override late final _StringsSettingsEn settings = _StringsSettingsEn._(_root);
+	@override late final _StringsReceiptScanEn receiptScan = _StringsReceiptScanEn._(_root);
 	@override late final _StringsCategoriesEn categories = _StringsCategoriesEn._(_root);
 	@override late final _StringsApiEn api = _StringsApiEn._(_root);
 	@override late final _StringsCurrencyEn currency = _StringsCurrencyEn._(_root);
@@ -666,6 +686,24 @@ class _StringsSettingsEn implements _StringsSettingsRu {
 	@override String get language => 'Language';
 	@override String get russian => 'Russian';
 	@override String get english => 'English';
+}
+
+// Path: receiptScan
+class _StringsReceiptScanEn implements _StringsReceiptScanRu {
+	_StringsReceiptScanEn._(this._root);
+
+	@override final _StringsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Receipt scanning';
+	@override String get cameraHint => 'Take a full photo of the receipt without glare or choose a photo for testing.';
+	@override String get processing => 'Recognizing receipt...';
+	@override String get scanCamera => 'Scan with camera';
+	@override String get choosePhoto => 'Choose receipt photo';
+	@override String get processError => 'Could not process the receipt. Try another photo.';
+	@override String get qrTemporaryFailed => 'The QR code could not be read temporarily, text parsing was used.';
+	@override String get qrNotRead => 'The receipt QR code was not read, only text parsing was used.';
+	@override String get qrItemsNotLoaded => 'Items were not loaded via QR, fallback text parsing was used.';
 }
 
 // Path: categories
@@ -963,6 +1001,15 @@ extension on Translations {
 			case 'settings.language': return 'Язык';
 			case 'settings.russian': return 'Русский';
 			case 'settings.english': return 'English';
+			case 'receiptScan.title': return 'Сканирование чека';
+			case 'receiptScan.cameraHint': return 'Сфотографируйте чек целиком без бликов или выберите фото для теста.';
+			case 'receiptScan.processing': return 'Распознаём чек...';
+			case 'receiptScan.scanCamera': return 'Сканировать камерой';
+			case 'receiptScan.choosePhoto': return 'Выбрать фото чека';
+			case 'receiptScan.processError': return 'Не удалось обработать чек. Попробуйте другой снимок.';
+			case 'receiptScan.qrTemporaryFailed': return 'QR-код временно не удалось считать, использован текстовый разбор.';
+			case 'receiptScan.qrNotRead': return 'QR-код чека не считался, использован только текстовый разбор.';
+			case 'receiptScan.qrItemsNotLoaded': return 'Позиции по QR не загрузились, использован резервный текстовый разбор.';
 			case 'categories.loadErr': return 'Ошибка загрузки категорий:';
 			case 'categories.addErr': return 'Ошибка добавления категории:';
 			case 'categories.deleteErr': return 'Ошибка удаления категории:';
@@ -1224,6 +1271,15 @@ extension on _StringsEn {
 			case 'settings.language': return 'Language';
 			case 'settings.russian': return 'Russian';
 			case 'settings.english': return 'English';
+			case 'receiptScan.title': return 'Receipt scanning';
+			case 'receiptScan.cameraHint': return 'Take a full photo of the receipt without glare or choose a photo for testing.';
+			case 'receiptScan.processing': return 'Recognizing receipt...';
+			case 'receiptScan.scanCamera': return 'Scan with camera';
+			case 'receiptScan.choosePhoto': return 'Choose receipt photo';
+			case 'receiptScan.processError': return 'Could not process the receipt. Try another photo.';
+			case 'receiptScan.qrTemporaryFailed': return 'The QR code could not be read temporarily, text parsing was used.';
+			case 'receiptScan.qrNotRead': return 'The receipt QR code was not read, only text parsing was used.';
+			case 'receiptScan.qrItemsNotLoaded': return 'Items were not loaded via QR, fallback text parsing was used.';
 			case 'categories.loadErr': return 'Error loading categories:';
 			case 'categories.addErr': return 'Error adding category:';
 			case 'categories.deleteErr': return 'Error deleting category:';

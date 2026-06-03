@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -15,13 +16,19 @@ import 'package:family_budget/data/api_client.dart' as _i789;
 import 'package:family_budget/data/api_service.dart' as _i825;
 import 'package:family_budget/data/bloc_categories/categories_cubit.dart'
     as _i240;
+import 'package:family_budget/data/repositories/achievement_repository.dart'
+    as _i561;
 import 'package:family_budget/data/repositories/auth_repository.dart' as _i380;
 import 'package:family_budget/data/repositories/category_repository.dart'
     as _i1018;
+import 'package:family_budget/data/repositories/credit_simulator_repository.dart'
+    as _i742;
 import 'package:family_budget/data/repositories/currency_repository.dart'
     as _i197;
 import 'package:family_budget/data/repositories/expense_repository.dart'
     as _i114;
+import 'package:family_budget/data/repositories/financial_profile_repository.dart'
+    as _i118;
 import 'package:family_budget/data/repositories/income_repository.dart'
     as _i607;
 import 'package:family_budget/data/repositories/user_repository.dart' as _i270;
@@ -90,6 +97,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i270.UserRepository(gh<_i825.ApiService>()));
     gh.lazySingleton<_i114.ExpenseRepository>(
         () => _i114.ExpenseRepository(gh<_i825.ApiService>()));
+    gh.lazySingleton<_i118.FinancialProfileRepository>(
+        () => _i118.FinancialProfileRepository(gh<_i825.ApiService>()));
+    gh.lazySingleton<_i561.AchievementRepository>(
+        () => _i561.AchievementRepository(gh<_i825.ApiService>()));
+    gh.lazySingleton<_i742.CreditSimulatorRepository>(
+        () => _i742.CreditSimulatorRepository(gh<_i825.ApiService>()));
     gh.factory<_i239.DiagramBloc>(() => _i239.DiagramBloc(
           gh<_i149.Preferences>(),
           gh<_i270.UserRepository>(),
@@ -100,6 +113,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i270.UserRepository>(),
           gh<_i114.ExpenseRepository>(),
           gh<_i607.IncomeRepository>(),
+          gh<_i118.FinancialProfileRepository>(),
+          gh<_i561.AchievementRepository>(),
         ));
     gh.factory<_i595.CalculatorBloc>(
         () => _i595.CalculatorBloc(gh<_i197.CurrencyRepository>()));

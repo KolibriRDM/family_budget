@@ -104,6 +104,17 @@
     "russian": "Russian",
     "english": "English"
   },
+  "receiptScan": {
+    "title": "Receipt scanning",
+    "cameraHint": "Take a full photo of the receipt without glare or choose a photo for testing.",
+    "processing": "Recognizing receipt...",
+    "scanCamera": "Scan with camera",
+    "choosePhoto": "Choose receipt photo",
+    "processError": "Could not process the receipt. Try another photo.",
+    "qrTemporaryFailed": "The QR code could not be read temporarily, text parsing was used.",
+    "qrNotRead": "The receipt QR code was not read, only text parsing was used.",
+    "qrItemsNotLoaded": "Items were not loaded via QR, fallback text parsing was used."
+  },
   "categories": {
     "loadErr": "Error loading categories:",
     "addErr": "Error adding category:",

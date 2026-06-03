@@ -91,7 +91,7 @@ extension ListExtension<T> on List<T> {
   List<T> separateBy<S extends T>(S separator) {
     final separatedListLength = 2 * length - 1;
     final separatedList =
-    List<T?>.filled(separatedListLength, null, growable: true);
+        List<T?>.filled(separatedListLength, null, growable: true);
     for (var i = 0; i < separatedListLength; i++) {
       final int itemIndex = i ~/ 2;
       if (i.isEven) {

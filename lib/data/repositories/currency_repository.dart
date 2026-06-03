@@ -8,10 +8,13 @@ class CurrencyRepository {
 
   final ApiService _service;
 
-  Future<ConvModel> getRate(double amount, String from, String to,) async {
+  Future<ConvModel> getRate(
+    double amount,
+    String from,
+    String to,
+  ) async {
     final res = await _service.getMethod(
-      path:
-          "/fixer/convert?to=$to&from=$from&amount=$amount",
+      path: "/fixer/convert?to=$to&from=$from&amount=$amount",
     );
     return ConvModel.fromJson(res.data);
   }

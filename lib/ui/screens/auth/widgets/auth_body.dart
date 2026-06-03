@@ -12,7 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'auth_detail_screen.dart';
 
 class AuthBodyScreen extends StatelessWidget {
-  const AuthBodyScreen({super.key, required this.authType, required this.onAuthCompleted});
+  const AuthBodyScreen(
+      {super.key, required this.authType, required this.onAuthCompleted});
 
   final AuthType authType;
   final Function() onAuthCompleted;
@@ -44,7 +45,9 @@ class AuthBodyScreen extends StatelessWidget {
                   child: LoadingGif(),
                 ),
               AuthInitState s => AuthLoginScreen(
-                  title: authType == AuthType.login ? t.auth.signInTitle : t.auth.registerTitle,
+                  title: authType == AuthType.login
+                      ? t.auth.signInTitle
+                      : t.auth.registerTitle,
                   login: s.login,
                   pass: s.pass,
                   isError: s.isError,

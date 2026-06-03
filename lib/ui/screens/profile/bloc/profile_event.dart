@@ -48,6 +48,28 @@ class ProfileAddIncomeEvent extends ProfileEvent {
   });
 }
 
+class ProfileInitReceiptScanEvent extends ProfileEvent {
+  const ProfileInitReceiptScanEvent();
+}
+
+class ProfileInitAchievementsEvent extends ProfileEvent {
+  const ProfileInitAchievementsEvent();
+}
+
+class ProfileAddReceiptExpenseEvent extends ProfileEvent {
+  final double totalCount;
+  final int categoryId;
+  final DateTime date;
+  final ReceiptModel receipt;
+
+  const ProfileAddReceiptExpenseEvent({
+    required this.totalCount,
+    required this.categoryId,
+    required this.date,
+    required this.receipt,
+  });
+}
+
 class ProfileEditIncomeEvent extends ProfileEvent {
   final int incomeId;
   final int categoryId;

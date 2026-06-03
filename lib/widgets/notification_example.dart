@@ -19,10 +19,11 @@ class NotificationExample extends StatelessWidget {
                 final notificationService = NotificationService();
                 await notificationService.initNotifications();
                 await notificationService.sendDelayedReminderNotification();
-                
+
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Уведомление будет отправлено через 10 секунд'),
+                    content:
+                        Text('Уведомление будет отправлено через 10 секунд'),
                     duration: Duration(seconds: 2),
                   ),
                 );
@@ -43,4 +44,4 @@ class NotificationExample extends StatelessWidget {
       ),
     );
   }
-} 
+}

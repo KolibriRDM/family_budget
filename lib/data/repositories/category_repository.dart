@@ -36,8 +36,8 @@ class CategoryRepository {
   }
 
   Future<void> delete(
-      int id,
-      ) async {
+    int id,
+  ) async {
     try {
       await _service.deleteMethod(
         path: "/categories/$id",
@@ -48,10 +48,10 @@ class CategoryRepository {
     } catch (e) {
       throw e;
     }
-
   }
 
-  Future<List<double>> getCategoryStatistics(int categoryId, String timeSegment) async {
+  Future<List<double>> getCategoryStatistics(
+      int categoryId, String timeSegment) async {
     try {
       final res = await _service.getMethod(
         path: "/categories/$categoryId/statistics",

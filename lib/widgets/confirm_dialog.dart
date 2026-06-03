@@ -71,19 +71,26 @@ void showConfirmDialog({
                         item.category?.icon ?? '',
                         height: 30,
                         width: 30,
-                        color: getIconColor(hexToColor(item.category?.color ?? '')),
+                        color: getIconColor(
+                            hexToColor(item.category?.color ?? '')),
                       ),
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     '${item.category?.name}',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.white),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(color: AppColors.white),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     '${item.totalCount} ${getIt.get<UserRepository>().curUser.currency}',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.white),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: AppColors.white),
                   ),
                 ],
               ),

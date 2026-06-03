@@ -32,7 +32,8 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final percents = _calculatePercents();
-    final formattedTotal = NumberFormat('#,##0.00').format(analyticsData.allCount);
+    final formattedTotal =
+        NumberFormat('#,##0.00').format(analyticsData.allCount);
     final theme = Theme.of(context);
 
     return Container(
@@ -61,7 +62,6 @@ class _Body extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(24, 15, 24, 24),
@@ -76,7 +76,6 @@ class _Body extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
-
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
@@ -119,7 +118,6 @@ class _Body extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 24),
-
                     Text(
                       t.diagram.categoryExpenses,
                       style: theme.textTheme.displaySmall?.copyWith(
@@ -127,7 +125,6 @@ class _Body extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-
                     if (analyticsData.titles.isEmpty)
                       Center(
                         child: Padding(
@@ -142,7 +139,8 @@ class _Body extends StatelessWidget {
                               const SizedBox(height: 16),
                               Text(
                                 t.diagram.noDataExpenses,
-                                style: theme.textTheme.bodyLarge?.copyWith(color: AppColors.onSecondary),
+                                style: theme.textTheme.bodyLarge
+                                    ?.copyWith(color: AppColors.onSecondary),
                                 textAlign: TextAlign.center,
                               ),
                             ],
@@ -164,7 +162,10 @@ class _Body extends StatelessWidget {
                                   analyticsData.titles[i],
                                   analyticsData.totalCounts[i],
                                   percents[i],
-                                  analyticsData.transactionCounts != null && i < analyticsData.transactionCounts!.length
+                                  analyticsData.transactionCounts != null &&
+                                          i <
+                                              analyticsData
+                                                  .transactionCounts!.length
                                       ? analyticsData.transactionCounts![i]
                                       : 1,
                                 ),
@@ -193,7 +194,9 @@ class _Body extends StatelessWidget {
         continue;
       }
 
-      final percent = double.parse((analyticsData.totalCounts[i] * 100 / analyticsData.allCount).toStringAsFixed(1));
+      final percent = double.parse(
+          (analyticsData.totalCounts[i] * 100 / analyticsData.allCount)
+              .toStringAsFixed(1));
 
       if (i != analyticsData.totalCounts.length - 1) {
         percents.add(percent);
@@ -264,20 +267,20 @@ class _Body extends StatelessWidget {
               ),
             ],
           ),
-
           const SizedBox(height: 8),
-
           Padding(
             padding: const EdgeInsets.only(left: 30),
             child: Row(
               children: [
                 Text(
                   formattedAmount,
-                  style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.onSurface),
+                  style: theme.textTheme.bodyMedium
+                      ?.copyWith(color: AppColors.onSurface),
                 ),
                 const SizedBox(width: 8),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
                     color: color.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(10),
@@ -293,8 +296,9 @@ class _Body extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         _formatTransactionCount(transactionCount),
-                        style: theme.textTheme.bodySmall
-                            ?.copyWith(fontStyle: FontStyle.italic, color: AppColors.onSecondary),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                            fontStyle: FontStyle.italic,
+                            color: AppColors.onSecondary),
                       ),
                     ],
                   ),
@@ -302,9 +306,7 @@ class _Body extends StatelessWidget {
               ],
             ),
           ),
-
           const SizedBox(height: 8),
-
           ClipRRect(
             borderRadius: BorderRadius.circular(6),
             child: Stack(
@@ -340,7 +342,8 @@ class _Body extends StatelessWidget {
 
     if (count % 10 == 1 && count % 100 != 11) {
       return '$count транзакция';
-    } else if ([2, 3, 4].contains(count % 10) && ![12, 13, 14].contains(count % 100)) {
+    } else if ([2, 3, 4].contains(count % 10) &&
+        ![12, 13, 14].contains(count % 100)) {
       return '$count транзакции';
     } else {
       return '$count транзакций';

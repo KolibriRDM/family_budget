@@ -1,6 +1,6 @@
 part of 'auth_bloc.dart';
 
-sealed class AuthState{
+sealed class AuthState {
   const AuthState();
 }
 

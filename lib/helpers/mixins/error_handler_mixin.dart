@@ -6,7 +6,9 @@ mixin ErrorHandlerMixin<Event, State> on Bloc<Event, State> {
   void emitError(Emitter<State> emit, dynamic ex) {
     final error = ex;
     final errorState = createErrorState(
-      message: error is DioException ? error.response?.data?.toString() ?? error.toString() : error.toString(),
+      message: error is DioException
+          ? error.response?.data?.toString() ?? error.toString()
+          : error.toString(),
       pageState: PageState.error,
     );
     emit(errorState);

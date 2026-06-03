@@ -6,7 +6,8 @@ class LoadingGif extends StatefulWidget {
   _LoadingGifState createState() => _LoadingGifState();
 }
 
-class _LoadingGifState extends State<LoadingGif> with SingleTickerProviderStateMixin {
+class _LoadingGifState extends State<LoadingGif>
+    with SingleTickerProviderStateMixin {
   late GifController _gifController;
 
   @override
@@ -25,9 +26,9 @@ class _LoadingGifState extends State<LoadingGif> with SingleTickerProviderStateM
           controller: _gifController,
           autostart: Autostart.loop,
           placeholder: (context) =>
-          const Center(child: CircularProgressIndicator()),
-          image: const AssetImage(
-              'assets/gif/coin-flip-transparent-unscreen.gif'),
+              const Center(child: CircularProgressIndicator()),
+          image:
+              const AssetImage('assets/gif/coin-flip-transparent-unscreen.gif'),
         ),
       ),
     );

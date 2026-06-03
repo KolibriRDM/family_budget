@@ -61,9 +61,9 @@ class ApiClient {
       StreamController<ErrorInterceptorHandler?>.broadcast();
 
   Future<bool> refreshRequest(
-      DioError error,
-      ErrorInterceptorHandler handler,
-      ) async {
+    DioError error,
+    ErrorInterceptorHandler handler,
+  ) async {
     try {
       final refreshToken = prefs.getStringByKey(Keys.refreshToken);
       if (refreshToken == null) {
@@ -133,8 +133,7 @@ class AppInterceptors extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    if (options.path
-        .contains('convert?to=')) {
+    if (options.path.contains('convert?to=')) {
       options.baseUrl = 'https://api.apilayer.com';
       options.headers['apikey'] = '42rYJoyvTsdnmHwTj45WyiNQG1MbfN2V';
     } else if (prefs.checkToken()) {
@@ -175,15 +174,17 @@ class AppInterceptors extends Interceptor {
     if (err.type == DioErrorType.badResponse) {
       if (err.response?.statusCode == 301) {
         throw BadRequestException(err.requestOptions);
-      } else if (err.response?.statusCode == 401 || err.response?.statusCode == 403) {
+      } else if (err.response?.statusCode == 401 ||
+          err.response?.statusCode == 403) {
         if (err.requestOptions.path.contains('refresh')) {
           await prefs.deleteAccessToken().then((value) async {
             await prefs.deleteRefreshToken();
           }).then((value) {
-            RestartWidget.restartApp(globalContext);
-          });
+              RestartWidget.restartApp(globalContext);
+            });
         } else {
-          client.refreshRequest(err, handler);
+          await client.refreshRequest(err, handler);
+          return;
         }
       } else if (err.response?.statusCode == 404) {
         if (err.requestOptions.path.contains('refresh')) {

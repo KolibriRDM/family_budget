@@ -44,7 +44,7 @@ class _AuthScreenState extends State<AuthScreen> {
     return AppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:  Text(
+        title: Text(
           t.auth.authTitle,
           style: theme.textTheme.headlineLarge,
         ),

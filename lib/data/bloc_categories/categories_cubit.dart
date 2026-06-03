@@ -14,7 +14,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   final CategoryRepository _categoryRepository;
 
   CategoriesCubit(this._categoryRepository) : super(CategoriesInitial()) {
-   // loadCategories();
+    // loadCategories();
   }
 
   Future<void> loadCategories() async {
@@ -29,10 +29,12 @@ class CategoriesCubit extends Cubit<CategoriesState> {
 
   Future<void> addCategory(String name, String color, String icon) async {
     try {
-      final newCategory = await _categoryRepository.createCategory(name, color, icon);
+      final newCategory =
+          await _categoryRepository.createCategory(name, color, icon);
       final currentState = state;
       if (currentState is CategoriesLoaded) {
-        emit(CategoriesLoaded(List.from(currentState.categories)..add(newCategory)));
+        emit(CategoriesLoaded(
+            List.from(currentState.categories)..add(newCategory)));
       }
     } catch (e) {
       showMessage(message: "${t.categories.addErr} $e", type: PageState.error);
@@ -49,7 +51,8 @@ class CategoriesCubit extends Cubit<CategoriesState> {
         ));
       }
     } catch (e) {
-      showMessage(message: "${t.categories.deleteErr} $e", type: PageState.error);
+      showMessage(
+          message: "${t.categories.deleteErr} $e", type: PageState.error);
     }
   }
 }

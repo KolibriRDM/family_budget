@@ -13,10 +13,10 @@ import 'package:family_budget/widgets/gif_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:family_budget/gen/strings.g.dart';
 
 import 'add_category_bottom_sheet.dart';
+import 'category_picker_tile.dart';
 
 class AddIncomeBody extends StatefulWidget {
   const AddIncomeBody({super.key, this.income});
@@ -43,7 +43,9 @@ class _AddIncomeBodyState extends State<AddIncomeBody> {
   }
 
   bool _validate() {
-    if (_totalCountController.text.isNotEmpty && _selectedDate != null && _selectedCategory != null) {
+    if (_totalCountController.text.isNotEmpty &&
+        _selectedDate != null &&
+        _selectedCategory != null) {
       return true;
     }
     showMessage(message: t.profile.enterParameters, type: PageState.info);
@@ -64,7 +66,8 @@ class _AddIncomeBodyState extends State<AddIncomeBody> {
   void _onNewCategory(BuildContext context) {
     showAddCategoryBottomSheet(
       context: context,
-      onCategoryAdded: (name, color, icon) => context.read<CategoriesCubit>().addCategory(name, color, icon),
+      onCategoryAdded: (name, color, icon) =>
+          context.read<CategoriesCubit>().addCategory(name, color, icon),
     );
   }
 
@@ -74,7 +77,8 @@ class _AddIncomeBodyState extends State<AddIncomeBody> {
       title: t.profile.deletingCategory,
       message: '${t.profile.youSureDeleteCategory} "${category.name}"?',
       item: category,
-      onConfirm: () => context.read<CategoriesCubit>().deleteCategory(category.id!),
+      onConfirm: () =>
+          context.read<CategoriesCubit>().deleteCategory(category.id!),
     );
   }
 
@@ -82,48 +86,57 @@ class _AddIncomeBodyState extends State<AddIncomeBody> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return GestureDetector(
-        onTap: () {
-      FocusScope.of(context).unfocus();
-    },
-    child: Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text(
-          widget.income != null ? t.profile.changeIncomeTitle : t.profile.addIncomeTitle,
-          style: theme.textTheme.headlineLarge,
-        ),
-        centerTitle: true,
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.background,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.white),
-          onPressed: () => context.read<ProfileBloc>().add(const ProfileInitialEvent()),
+        appBar: AppBar(
+          title: Text(
+            widget.income != null
+                ? t.profile.changeIncomeTitle
+                : t.profile.addIncomeTitle,
+            style: theme.textTheme.headlineLarge,
+          ),
+          centerTitle: true,
+          backgroundColor: AppColors.background,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: AppColors.white),
+            onPressed: () =>
+                context.read<ProfileBloc>().add(const ProfileInitialEvent()),
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AppTextField(
+                textController: _totalCountController,
+                colorBorder: AppColors.colorScheme.primary,
+                hintText: t.profile.enterAmount,
+                textInputType: TextInputType.number,
+                textInputFormatter: FilteringTextInputFormatter.allow(
+                    RegExp(r'^-?\d*[.,]?\d*$')),
+                hintStyle: theme.textTheme.titleSmall
+                    ?.copyWith(color: AppColors.secondary),
+              ),
+              const SizedBox(height: 20),
+              _buildDateSelector(theme),
+              const SizedBox(height: 20),
+              Text(
+                t.profile.enterCategory,
+                style: theme.textTheme.displaySmall,
+              ),
+              const SizedBox(height: 10),
+              Expanded(child: _buildCategoriesGrid(context)),
+              const SizedBox(height: 10),
+              _buildActionButton(context),
+            ],
+          ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AppTextField(
-              textController: _totalCountController,
-              colorBorder: AppColors.colorScheme.primary,
-              hintText: t.profile.enterAmount,
-              textInputType: TextInputType.number,
-              textInputFormatter: FilteringTextInputFormatter.allow(RegExp(r'^-?\d*[.,]?\d*$')),
-              hintStyle: theme.textTheme.titleSmall?.copyWith(color: AppColors.secondary),
-            ),
-            const SizedBox(height: 20),
-            _buildDateSelector(theme),
-            const SizedBox(height: 20),
-            Text(t.profile.enterCategory, style: theme.textTheme.displaySmall,),
-            const SizedBox(height: 10),
-            Expanded(child: _buildCategoriesGrid(context)),
-            const SizedBox(height: 10),
-            _buildActionButton(context),
-          ],
-        ),
-      ),),
     );
   }
 
@@ -135,7 +148,8 @@ class _AddIncomeBodyState extends State<AddIncomeBody> {
       },
       child: Text(
         _selectedDate?.formatNumberDate ?? t.profile.enterDate,
-        style: theme.textTheme.displaySmall?.copyWith(color: AppColors.colorScheme.primary),
+        style: theme.textTheme.displaySmall
+            ?.copyWith(color: AppColors.colorScheme.primary),
       ),
     );
   }
@@ -149,9 +163,9 @@ class _AddIncomeBodyState extends State<AddIncomeBody> {
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 4,
-              crossAxisSpacing: 4,
+              crossAxisSpacing: 8,
               mainAxisSpacing: 8,
-              mainAxisExtent: 100,
+              mainAxisExtent: 94,
             ),
             itemCount: state.categories.length + 1,
             itemBuilder: (_, index) => index == 0
@@ -169,75 +183,25 @@ class _AddIncomeBodyState extends State<AddIncomeBody> {
   }
 
   Widget _buildNewCategoryButton(BuildContext context) {
-    final theme = Theme.of(context);
-    return GestureDetector(
+    return CategoryPickerTile(
+      title: t.profile.newBtn,
+      accentColor: AppColors.lightPrimary,
+      isNew: true,
       onTap: () => _onNewCategory(context),
-      child: Column(
-        children: [
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.transparent,
-              border: Border.all(color: AppColors.primary, width: 2),
-            ),
-            child: const Center(
-              child: Icon(Icons.add, color: AppColors.primary, size: 32),
-            ),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            t.profile.newBtn,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: AppColors.white,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
     );
   }
 
   Widget _buildCategoryItem(BuildContext context, CategoryModel category) {
     final isSelected = _selectedCategory?.id == category.id;
-    final theme = Theme.of(context);
-    return GestureDetector(
+    final color = hexToColor(category.color ?? '');
+    return CategoryPickerTile(
+      title: category.name ?? '',
+      accentColor: color,
+      iconAsset: category.icon,
+      isSelected: isSelected,
       onTap: () => setState(() => _selectedCategory = category),
       onLongPress: () => _onDeleteCategory(context, category),
-      child: Column(
-        children: [
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: hexToColor(category.color ?? ''),
-            ),
-            child: Center(
-              child: SvgPicture.asset(
-                category.icon ?? '',
-                width: 32,
-                height: 32,
-                color: _getIconColor(hexToColor(category.color ?? '')),
-              ),
-            ),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            category.name ?? '',
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: isSelected ? AppColors.primary : AppColors.white,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
     );
-  }
-
-  Color _getIconColor(Color backgroundColor) {
-    return backgroundColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
   }
 
   Widget _buildActionButton(BuildContext context) {
@@ -252,7 +216,8 @@ class _AddIncomeBodyState extends State<AddIncomeBody> {
           if (widget.income == null) {
             context.read<ProfileBloc>().add(
                   ProfileAddIncomeEvent(
-                    totalCount: double.tryParse(_totalCountController.text) ?? 0,
+                    totalCount:
+                        double.tryParse(_totalCountController.text) ?? 0,
                     categoryId: _selectedCategory!.id!,
                     date: _selectedDate!,
                   ),
@@ -262,7 +227,8 @@ class _AddIncomeBodyState extends State<AddIncomeBody> {
                   ProfileEditIncomeEvent(
                     incomeId: widget.income!.id!,
                     categoryId: _selectedCategory!.id!,
-                    totalCount: double.tryParse(_totalCountController.text) ?? 0,
+                    totalCount:
+                        double.tryParse(_totalCountController.text) ?? 0,
                     date: _selectedDate!,
                   ),
                 );

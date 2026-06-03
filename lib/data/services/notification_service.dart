@@ -8,7 +8,8 @@ class NotificationService {
       FlutterLocalNotificationsPlugin();
 
   Future<void> initNotifications() async {
-    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosSettings = DarwinInitializationSettings();
 
     const initializationSettings = InitializationSettings(
@@ -20,15 +21,17 @@ class NotificationService {
   }
 
   Future<bool> requestPermission() async {
-    final platform = _flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>();
+    final platform =
+        _flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
     if (platform != null) {
       final granted = await platform.requestNotificationsPermission();
       return granted ?? false;
     }
 
-    final iosPlatform = _flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-        IOSFlutterLocalNotificationsPlugin>();
+    final iosPlatform =
+        _flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>();
     if (iosPlatform != null) {
       final result = await iosPlatform.requestPermissions(
         alert: true,
@@ -42,7 +45,8 @@ class NotificationService {
   }
 
   Future<void> showNotification() async {
-    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
       'channel_id',
       'channel_name',
       channelDescription: 'channel_description',
@@ -50,7 +54,8 @@ class NotificationService {
       priority: Priority.high,
     );
 
-    const NotificationDetails details = NotificationDetails(android: androidDetails);
+    const NotificationDetails details =
+        NotificationDetails(android: androidDetails);
 
     await _flutterLocalNotificationsPlugin.show(
       0,
@@ -85,7 +90,8 @@ class NotificationService {
   }
 
   Future<void> scheduleDefaultReminder(DefaultReminderModel reminder) async {
-    final tz.TZDateTime scheduledDate = tz.TZDateTime.from(reminder.date, tz.local);
+    final tz.TZDateTime scheduledDate =
+        tz.TZDateTime.from(reminder.date, tz.local);
 
     await _flutterLocalNotificationsPlugin.zonedSchedule(
       reminder.id,
@@ -103,11 +109,10 @@ class NotificationService {
         iOS: DarwinNotificationDetails(),
       ),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      matchDateTimeComponents: reminder.isRecurring
-          ? DateTimeComponents.dayOfMonthAndTime
-          : null,
+      matchDateTimeComponents:
+          reminder.isRecurring ? DateTimeComponents.dayOfMonthAndTime : null,
       uiLocalNotificationDateInterpretation:
-      UILocalNotificationDateInterpretation.absoluteTime,
+          UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
 
@@ -130,14 +135,14 @@ class NotificationService {
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
       uiLocalNotificationDateInterpretation:
-      UILocalNotificationDateInterpretation.absoluteTime,
+          UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
 
   tz.TZDateTime _nextInstanceOfWeeklyTime() {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduledDate =
-    tz.TZDateTime(tz.local, now.year, now.month, now.day, 9); // 9:00 AM
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, 9); // 9:00 AM
 
     // Если текущее время после 9:00, добавляем день
     if (scheduledDate.isBefore(now)) {
@@ -182,7 +187,8 @@ class NotificationService {
   }
 }
 
-void onDidReceiveNotificationResponse(NotificationResponse notificationResponse) async {
+void onDidReceiveNotificationResponse(
+    NotificationResponse notificationResponse) async {
   final String? payload = notificationResponse.payload;
   if (notificationResponse.payload != null) {
     debugPrint('notification payload: $payload');

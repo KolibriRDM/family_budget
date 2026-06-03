@@ -17,7 +17,7 @@ class AuthGuard extends AutoRouteGuard {
       resolver.next();
     } else {
       resolver.redirect(
-         AuthRoute(
+        AuthRoute(
           onAuthCompleted: resolver.next,
         ),
       );

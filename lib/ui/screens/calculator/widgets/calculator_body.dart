@@ -41,11 +41,12 @@ class _CalculatorBodyState extends State<CalculatorBody> {
   @override
   void initState() {
     super.initState();
-    _searchController = TextEditingController(text: widget.oldState?.searchText);
+    _searchController =
+        TextEditingController(text: widget.oldState?.searchText);
     _firstCountController =
         TextEditingController(text: widget.oldState?.count?.toString());
-    _secondCountController =
-        TextEditingController(text: widget.oldState?.answer?.toString().replaceAll('.', ','));
+    _secondCountController = TextEditingController(
+        text: widget.oldState?.answer?.toString().replaceAll('.', ','));
     _first = widget.oldState?.first;
     _second = widget.oldState?.second;
     _filterCurrencies(widget.oldState?.searchText ?? '');
@@ -55,7 +56,8 @@ class _CalculatorBodyState extends State<CalculatorBody> {
   void didUpdateWidget(covariant CalculatorBody oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.oldState?.answer != widget.oldState?.answer) {
-      _secondCountController.text = widget.oldState?.answer?.toString().replaceAll('.', ',') ?? '';
+      _secondCountController.text =
+          widget.oldState?.answer?.toString().replaceAll('.', ',') ?? '';
     }
   }
 
@@ -63,8 +65,8 @@ class _CalculatorBodyState extends State<CalculatorBody> {
     final query = value.toUpperCase();
     _filteredCurrencies = _currencies
         .where((currency) =>
-    currency.value.contains(query) ||
-        currency.displayName.toUpperCase().contains(query))
+            currency.value.contains(query) ||
+            currency.displayName.toUpperCase().contains(query))
         .toList();
   }
 
@@ -85,14 +87,15 @@ class _CalculatorBodyState extends State<CalculatorBody> {
   }
 
   void _calculate() {
-    final count = double.tryParse(_firstCountController.text.replaceAll(',', '.'));
+    final count =
+        double.tryParse(_firstCountController.text.replaceAll(',', '.'));
     if (_first != null && _second != null && count != null) {
       context.read<CalculatorBloc>().add(CalculateEvent(
-        first: _first!,
-        second: _second!,
-        count: count,
-        searchText: _searchController.text,
-      ));
+            first: _first!,
+            second: _second!,
+            count: count,
+            searchText: _searchController.text,
+          ));
     }
   }
 
@@ -100,27 +103,28 @@ class _CalculatorBodyState extends State<CalculatorBody> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return GestureDetector(
-        onTap: () {
-      FocusScope.of(context).unfocus();
-    },
-    child: AppScaffold(
-      willPop: false,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            _buildSearchField(theme),
-            const SizedBox(height: 20),
-            _buildConversionRow(context, theme),
-            const SizedBox(height: 20),
-            _buildCalculateButton(),
-            if (_filteredCurrencies.isNotEmpty) ...[
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: AppScaffold(
+        willPop: false,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              _buildSearchField(theme),
               const SizedBox(height: 20),
-              _buildCurrencyList(),
+              _buildConversionRow(context, theme),
+              const SizedBox(height: 20),
+              _buildCalculateButton(),
+              if (_filteredCurrencies.isNotEmpty) ...[
+                const SizedBox(height: 20),
+                _buildCurrencyList(),
+              ],
             ],
-          ],
+          ),
         ),
-      ),),
+      ),
     );
   }
 
@@ -160,27 +164,33 @@ class _CalculatorBodyState extends State<CalculatorBody> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildCurrencySelector(theme, _first, () => setState(() => _first = null)),
+          _buildCurrencySelector(
+              theme, _first, () => setState(() => _first = null)),
           TextFieldCalculatorWidget(
             borderColor: AppColors.complementaryBlue,
             controller: _firstCountController,
             onChanged: _secondCountController.clear,
           ),
-          Text(' = ', style: theme.textTheme.displaySmall?.copyWith(
-            color: AppColors.secondary,
-          ),),
+          Text(
+            ' = ',
+            style: theme.textTheme.displaySmall?.copyWith(
+              color: AppColors.secondary,
+            ),
+          ),
           TextFieldCalculatorWidget(
             borderColor: AppColors.primary,
             controller: _secondCountController,
             readOnly: true,
           ),
-          _buildCurrencySelector(theme, _second, () => setState(() => _second = null)),
+          _buildCurrencySelector(
+              theme, _second, () => setState(() => _second = null)),
         ],
       ),
     );
   }
 
-  Widget _buildCurrencySelector(ThemeData theme, Currency? currency, VoidCallback onTap) {
+  Widget _buildCurrencySelector(
+      ThemeData theme, Currency? currency, VoidCallback onTap) {
     return SizedBox(
       width: 48,
       child: InkWell(
@@ -257,13 +267,11 @@ class _CalculatorBodyState extends State<CalculatorBody> {
                   ),
                 ),
                 const SizedBox(width: 14),
-                Text(currency.value, style: const TextStyle(color: AppColors.background)),
+                Text(currency.value,
+                    style: const TextStyle(color: AppColors.background)),
                 const SizedBox(width: 10),
                 SizedBox(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width - 120,
+                  width: MediaQuery.of(context).size.width - 120,
                   child: Text(
                     currency.displayName,
                     style: const TextStyle(color: AppColors.background),

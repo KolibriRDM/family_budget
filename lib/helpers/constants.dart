@@ -17,7 +17,6 @@ String pattern = r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
 final RegExp emailRegex = RegExp(pattern);
 
 RegExp emailRegExp =
-RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+    RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
 
 DateFormat inputDateFormat = DateFormat('dd-MM-yyyy hh:mm:ss a');
-

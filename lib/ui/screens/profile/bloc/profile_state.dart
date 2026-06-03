@@ -6,10 +6,14 @@ sealed class ProfileState {
 
 class ProfileInitialState extends ProfileState {
   final UserModel user;
+  final FinancialProfileModel? financialProfile;
+  final List<AchievementModel> achievements;
   final List<IncomeModel> incomesList;
 
   const ProfileInitialState({
     required this.user,
+    required this.financialProfile,
+    required this.achievements,
     required this.incomesList,
   });
 }
@@ -27,6 +31,20 @@ class ProfileAddExpenseState extends ProfileState {
 
   const ProfileAddExpenseState({
     this.expense,
+  });
+}
+
+class ProfileReceiptScanState extends ProfileState {
+  const ProfileReceiptScanState();
+}
+
+class ProfileAchievementsState extends ProfileState {
+  final UserModel user;
+  final List<AchievementModel> achievements;
+
+  const ProfileAchievementsState({
+    required this.user,
+    required this.achievements,
   });
 }
 

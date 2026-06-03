@@ -29,10 +29,12 @@ class CategoryAnalyticsBottomSheet extends StatefulWidget {
   });
 
   @override
-  State<CategoryAnalyticsBottomSheet> createState() => _CategoryAnalyticsBottomSheetState();
+  State<CategoryAnalyticsBottomSheet> createState() =>
+      _CategoryAnalyticsBottomSheetState();
 }
 
-class _CategoryAnalyticsBottomSheetState extends State<CategoryAnalyticsBottomSheet> {
+class _CategoryAnalyticsBottomSheetState
+    extends State<CategoryAnalyticsBottomSheet> {
   final _categoryRepository = getIt<CategoryRepository>();
   String _selectedTimeSegment = 'days';
   List<double> _statistics = List.empty(growable: true);
@@ -53,7 +55,8 @@ class _CategoryAnalyticsBottomSheetState extends State<CategoryAnalyticsBottomSh
         widget.categoryId,
         _selectedTimeSegment,
       );
-      final recentExpenses = await _categoryRepository.getRecentCategoryExpenses(
+      final recentExpenses =
+          await _categoryRepository.getRecentCategoryExpenses(
         widget.categoryId,
       );
 
@@ -74,13 +77,13 @@ class _CategoryAnalyticsBottomSheetState extends State<CategoryAnalyticsBottomSh
     final now = DateTime.now();
     switch (_selectedTimeSegment) {
       case 'days':
-        return List.generate(7, (index) =>
-          now.subtract(Duration(days: 6 - index)));
+        return List.generate(
+            7, (index) => now.subtract(Duration(days: 6 - index)));
       case 'weeks':
         // Находим понедельник текущей недели
         final monday = now.subtract(Duration(days: now.weekday - 1));
-        return List.generate(7, (index) =>
-          monday.subtract(Duration(days: (6 - index) * 7)));
+        return List.generate(
+            7, (index) => monday.subtract(Duration(days: (6 - index) * 7)));
       case 'months':
         return List.generate(12, (index) {
           final month = now.month + (index) + 1;
@@ -102,7 +105,20 @@ class _CategoryAnalyticsBottomSheetState extends State<CategoryAnalyticsBottomSh
         final endOfWeek = date.add(Duration(days: 6));
         return '${DateFormat('dd.MM').format(date)}\n${DateFormat('dd.MM').format(endOfWeek)}';
       case 'months':
-        final months = [tt.januaryShort, tt.februaryShort, tt.marchShort, tt.aprilShort, tt.mayShort, tt.juneShort, tt.julyShort, tt.augustShort, tt.septemberShort, tt.octoberShort, tt.novemberShort, tt.decemberShort];
+        final months = [
+          tt.januaryShort,
+          tt.februaryShort,
+          tt.marchShort,
+          tt.aprilShort,
+          tt.mayShort,
+          tt.juneShort,
+          tt.julyShort,
+          tt.augustShort,
+          tt.septemberShort,
+          tt.octoberShort,
+          tt.novemberShort,
+          tt.decemberShort
+        ];
         return months[date.month - 1];
       default:
         return '';
@@ -160,15 +176,15 @@ class _CategoryAnalyticsBottomSheetState extends State<CategoryAnalyticsBottomSh
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: widget.categoryColor,
+                            borderRadius: BorderRadius.circular(12),
+                            color: widget.categoryColor.withOpacity(0.18),
                           ),
                           child: Center(
                             child: SvgPicture.asset(
                               widget.icon,
-                              height: 30,
-                              width: 30,
-                              color: getIconColor(widget.categoryColor),
+                              height: 24,
+                              width: 24,
+                              color: widget.categoryColor,
                             ),
                           ),
                         ),
@@ -195,7 +211,11 @@ class _CategoryAnalyticsBottomSheetState extends State<CategoryAnalyticsBottomSh
                     const SizedBox(height: 16),
                     SizedBox(
                       height: 200,
-                      child: _isLoading ?  Center(child: SizedBox(height: 100, width: 100, child: LoadingGif())) : _buildStatisticsChart(),
+                      child: _isLoading
+                          ? Center(
+                              child: SizedBox(
+                                  height: 100, width: 100, child: LoadingGif()))
+                          : _buildStatisticsChart(),
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -206,7 +226,11 @@ class _CategoryAnalyticsBottomSheetState extends State<CategoryAnalyticsBottomSh
                     ),
                     const SizedBox(height: 16),
                     Expanded(
-                      child: _isLoading ? Center(child: SizedBox(height: 100, width: 100, child: LoadingGif())) : _buildRecentExpensesList(),
+                      child: _isLoading
+                          ? Center(
+                              child: SizedBox(
+                                  height: 100, width: 100, child: LoadingGif()))
+                          : _buildRecentExpensesList(),
                     ),
                   ],
                 ),
@@ -252,7 +276,9 @@ class _CategoryAnalyticsBottomSheetState extends State<CategoryAnalyticsBottomSh
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? getIconColor(widget.categoryColor) : AppColors.onSecondary,
+            color: isSelected
+                ? getIconColor(widget.categoryColor)
+                : AppColors.onSecondary,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           ),
         ),
@@ -262,127 +288,132 @@ class _CategoryAnalyticsBottomSheetState extends State<CategoryAnalyticsBottomSh
 
   Widget _buildStatisticsChart() {
     return SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        // child: Padding(
-          // padding: const EdgeInsets.only(right: 16.0),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width < 350 ? 400 : MediaQuery.of(context).size.width - 48,
-            child: LineChart(
-            LineChartData(
-              lineTouchData: LineTouchData(enabled: false),
-              gridData: FlGridData(
-                show: true,
-                horizontalInterval: 100,
-                drawVerticalLine: false,
-                getDrawingHorizontalLine: (value) {
-                  return FlLine(
-                    color: AppColors.onSecondary.withOpacity(0.1),
-                    strokeWidth: 1,
-                  );
-                },
-              ),
-              titlesData: FlTitlesData(
-                show: true,
-                bottomTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    interval: 1,
-                    getTitlesWidget: (value, meta) {
-                      if (value < 0 || value >= _dates.length) {
-                        return const Text('');
-                      }
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 8),
-                        child: Transform.rotate(
-                          angle: _dates.length == 12 ? -math.pi / 2 : 0,
-                          child: Center(
-                            child: Text(
-                              _formatDate(_dates[value.toInt()]),
-                              style: const TextStyle(
-                                color: AppColors.onSecondary,
-                                fontSize: 11,
-                              ),
+      scrollDirection: Axis.horizontal,
+      // child: Padding(
+      // padding: const EdgeInsets.only(right: 16.0),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width < 350
+            ? 400
+            : MediaQuery.of(context).size.width - 48,
+        child: LineChart(
+          LineChartData(
+            lineTouchData: LineTouchData(enabled: false),
+            gridData: FlGridData(
+              show: true,
+              horizontalInterval: 100,
+              drawVerticalLine: false,
+              getDrawingHorizontalLine: (value) {
+                return FlLine(
+                  color: AppColors.onSecondary.withOpacity(0.1),
+                  strokeWidth: 1,
+                );
+              },
+            ),
+            titlesData: FlTitlesData(
+              show: true,
+              bottomTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  interval: 1,
+                  getTitlesWidget: (value, meta) {
+                    if (value < 0 || value >= _dates.length) {
+                      return const Text('');
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Transform.rotate(
+                        angle: _dates.length == 12 ? -math.pi / 2 : 0,
+                        child: Center(
+                          child: Text(
+                            _formatDate(_dates[value.toInt()]),
+                            style: const TextStyle(
+                              color: AppColors.onSecondary,
+                              fontSize: 11,
                             ),
                           ),
                         ),
-                      );
-                    },
-                    reservedSize: _dates.length == 7 ? 40 : 30,
-                  ),
+                      ),
+                    );
+                  },
+                  reservedSize: _dates.length == 7 ? 40 : 30,
                 ),
-                leftTitles: AxisTitles(
-                  axisNameWidget: Text(widget.currency),
-                ),
-                topTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    interval: 1,
-                    getTitlesWidget: (value, meta) {
-                      if (value < 0 || value >= _statistics.length) {
-                        return const Text('');
-                      }
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: Text(
-                          _statistics[value.toInt()].toStringAsFixed(0),
-                          style: TextStyle(
-                            color: widget.categoryColor,
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                          ),
+              ),
+              leftTitles: AxisTitles(
+                axisNameWidget: Text(widget.currency),
+              ),
+              topTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  interval: 1,
+                  getTitlesWidget: (value, meta) {
+                    if (value < 0 || value >= _statistics.length) {
+                      return const Text('');
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        _statistics[value.toInt()].toStringAsFixed(0),
+                        style: TextStyle(
+                          color: widget.categoryColor,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
                         ),
-                      );
-                    },
-                    reservedSize: 20,
-                  ),
-                ),
-                rightTitles: AxisTitles(
-                  sideTitles: SideTitles(showTitles: false),
+                      ),
+                    );
+                  },
+                  reservedSize: 20,
                 ),
               ),
-              borderData: FlBorderData(
-                show: true,
-                border: Border(
-                  left: BorderSide(color: AppColors.onSecondary.withOpacity(0.2)),
-                  bottom: BorderSide(color: AppColors.onSecondary.withOpacity(0.2)),
-                ),
+              rightTitles: AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
               ),
-              minX: 0,
-              maxX: _statistics.length - 1.0,
-              minY: 0,
-              maxY: _statistics.isEmpty ? 0 : _statistics.reduce((a, b) => a > b ? a : b) * 1.4,
-              lineBarsData: [
-                LineChartBarData(
-                  preventCurveOverShooting: true,
-                  spots: List.generate(
-                    _statistics.length,
-                    (index) => FlSpot(index.toDouble(), _statistics[index]),
-                  ),
-                  isCurved: true,
-                  color: widget.categoryColor,
-                  barWidth: 3,
-                  isStrokeCapRound: false,
-                  dotData: FlDotData(
-                    show: true,
-                    getDotPainter: (spot, percent, barData, index) {
-                      return FlDotCirclePainter(
-                        radius: 4,
-                        color: widget.categoryColor,
-                        strokeWidth: 1.5,
-                        strokeColor: Colors.white,
-                      );
-                    },
-                  ),
-                  belowBarData: BarAreaData(
-                    show: true,
-                    color: widget.categoryColor.withOpacity(0.1),
-                  ),
-                ),
-              ],
             ),
-          ),
+            borderData: FlBorderData(
+              show: true,
+              border: Border(
+                left: BorderSide(color: AppColors.onSecondary.withOpacity(0.2)),
+                bottom:
+                    BorderSide(color: AppColors.onSecondary.withOpacity(0.2)),
+              ),
+            ),
+            minX: 0,
+            maxX: _statistics.length - 1.0,
+            minY: 0,
+            maxY: _statistics.isEmpty
+                ? 0
+                : _statistics.reduce((a, b) => a > b ? a : b) * 1.4,
+            lineBarsData: [
+              LineChartBarData(
+                preventCurveOverShooting: true,
+                spots: List.generate(
+                  _statistics.length,
+                  (index) => FlSpot(index.toDouble(), _statistics[index]),
                 ),
-        // ),
+                isCurved: true,
+                color: widget.categoryColor,
+                barWidth: 3,
+                isStrokeCapRound: false,
+                dotData: FlDotData(
+                  show: true,
+                  getDotPainter: (spot, percent, barData, index) {
+                    return FlDotCirclePainter(
+                      radius: 4,
+                      color: widget.categoryColor,
+                      strokeWidth: 1.5,
+                      strokeColor: Colors.white,
+                    );
+                  },
+                ),
+                belowBarData: BarAreaData(
+                  show: true,
+                  color: widget.categoryColor.withOpacity(0.1),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      // ),
     );
   }
 
@@ -422,9 +453,9 @@ class _CategoryAnalyticsBottomSheetState extends State<CategoryAnalyticsBottomSh
               Text(
                 '${expense.totalCount} ${widget.currency}',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: widget.categoryColor,
-                  fontWeight: FontWeight.bold,
-                ),
+                      color: widget.categoryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               Text(
                 expense.date?.formatColumnDate ?? '',

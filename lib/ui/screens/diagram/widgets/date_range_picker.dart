@@ -2,8 +2,7 @@ import 'package:family_budget/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:family_budget/gen/strings.g.dart';
 
-Future<({DateTime dateFrom, DateTime dateTo})?>
-    showCustomDateRangePicker({
+Future<({DateTime dateFrom, DateTime dateTo})?> showCustomDateRangePicker({
   required BuildContext context,
   ({DateTime dateFrom, DateTime dateTo})? customPeriod,
 }) async {
@@ -54,7 +53,7 @@ Future<({DateTime dateFrom, DateTime dateTo})?>
                 if (states.contains(WidgetState.selected)) {
                   return Colors.white;
                 }
-                return AppColors.onSecondary; 
+                return AppColors.onSecondary;
               },
             ),
             dayOverlayColor: WidgetStateProperty.resolveWith<Color>(
@@ -65,12 +64,15 @@ Future<({DateTime dateFrom, DateTime dateTo})?>
                 return Colors.transparent;
               },
             ),
-            todayForegroundColor: WidgetStateProperty.all(AppColors.onSecondary),
+            todayForegroundColor:
+                WidgetStateProperty.all(AppColors.onSecondary),
             todayBackgroundColor: WidgetStateProperty.all(Colors.transparent),
-            todayBorder: BorderSide(color: AppColors.colorScheme.primary, width: 1),
+            todayBorder:
+                BorderSide(color: AppColors.colorScheme.primary, width: 1),
             dayStyle: TextStyle(color: AppColors.onSecondary),
             rangePickerBackgroundColor: AppColors.background,
-            rangeSelectionBackgroundColor: AppColors.colorScheme.primary.withOpacity(0.3),
+            rangeSelectionBackgroundColor:
+                AppColors.colorScheme.primary.withOpacity(0.3),
             yearForegroundColor: WidgetStateProperty.resolveWith<Color>(
               (Set<WidgetState> states) {
                 if (states.contains(WidgetState.selected)) {
@@ -129,4 +131,4 @@ Future<DateTimeRange?> showMaterialDateRangePicker({
     fieldStartHintText: t.diagram.fieldStartHintText,
     fieldEndHintText: t.diagram.fieldEndHintText,
   );
-} 
+}

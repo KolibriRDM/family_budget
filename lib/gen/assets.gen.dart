@@ -30,6 +30,19 @@ class $AssetsGifGen {
   List<AssetGenImage> get values => [coinFlipTransparentUnscreen];
 }
 
+class $AssetsI18nGen {
+  const $AssetsI18nGen();
+
+  /// File path: assets/i18n/strings.i18n.json
+  String get stringsI18n => 'assets/i18n/strings.i18n.json';
+
+  /// File path: assets/i18n/strings_en.i18n.json
+  String get stringsEnI18n => 'assets/i18n/strings_en.i18n.json';
+
+  /// List of all assets
+  List<String> get values => [stringsI18n, stringsEnI18n];
+}
+
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
@@ -81,7 +94,7 @@ class $AssetsIconsGen {
         info,
         initIcon,
         profile,
-        search
+        search,
       ];
 }
 
@@ -219,25 +232,22 @@ class $AssetsIconsCategoriesGen {
         icon6,
         icon7,
         icon8,
-        icon9
+        icon9,
       ];
 }
 
 class Assets {
-  Assets._();
+  const Assets._();
 
   static const $AssetsGifGen gif = $AssetsGifGen();
+  static const $AssetsI18nGen i18n = $AssetsI18nGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $EnvGen env = $EnvGen();
 }
 
 class AssetGenImage {
-  const AssetGenImage(
-    this._assetName, {
-    this.size,
-    this.flavors = const {},
-  });
+  const AssetGenImage(this._assetName, {this.size, this.flavors = const {}});
 
   final String _assetName;
 
@@ -265,7 +275,7 @@ class AssetGenImage {
     bool gaplessPlayback = true,
     bool isAntiAlias = false,
     String? package,
-    FilterQuality filterQuality = FilterQuality.low,
+    FilterQuality filterQuality = FilterQuality.medium,
     int? cacheWidth,
     int? cacheHeight,
   }) {
@@ -297,15 +307,8 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider({
-    AssetBundle? bundle,
-    String? package,
-  }) {
-    return AssetImage(
-      _assetName,
-      bundle: bundle,
-      package: package,
-    );
+  ImageProvider provider({AssetBundle? bundle, String? package}) {
+    return AssetImage(_assetName, bundle: bundle, package: package);
   }
 
   String get path => _assetName;

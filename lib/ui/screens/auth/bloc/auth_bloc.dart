@@ -38,7 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>
   UserModel? curUser;
 
   void _onInitialEvent(
-      AuthInitEvent event,
+    AuthInitEvent event,
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoadingState());
@@ -46,7 +46,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>
   }
 
   void _onDetailEvent(
-      AuthDetailEvent event,
+    AuthDetailEvent event,
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoadingState());
@@ -86,7 +86,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>
   }
 
   void _onAuthEvent(
-      OnAuthEvent event,
+    OnAuthEvent event,
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoadingState());

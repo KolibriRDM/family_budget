@@ -71,28 +71,23 @@ class DiagramScreen extends StatelessWidget {
           const SizedBox(height: 8),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+            padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
               color: AppColors.surface,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primary.withOpacity(0.2),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: AppColors.primary.withOpacity(0.18)),
             ),
-            child:
-                _FilterSelection(
-                  selectedType: bloc.type,
-                  customPeriod: bloc.customPeriod,
-                ),
+            child: _FilterSelection(
+              selectedType: bloc.type,
+              customPeriod: bloc.customPeriod,
+            ),
           ),
           const SizedBox(height: 10),
           Expanded(
             child: BlocBuilder<DiagramBloc, DiagramState>(
-              buildWhen: (previous, current) => current is DiagramLoadingState || current is DiagramInitialState,
+              buildWhen: (previous, current) =>
+                  current is DiagramLoadingState ||
+                  current is DiagramInitialState,
               builder: (_, state) {
                 return switch (state) {
                   DiagramLoadingState _ => AppScaffold(
@@ -132,45 +127,46 @@ class _FilterSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Теперь переводы будут обновляться при смене языка
     final _options = [
       (t.diagram.dayBtn, 1, Icons.today),
       (t.diagram.weekBtn, 2, Icons.date_range),
     ];
-    
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        ..._options.map((option) => _buildFilterOption(context, option.$1, option.$2, option.$3)),
+        ..._options.map((option) =>
+            _buildFilterOption(context, option.$1, option.$2, option.$3)),
         _buildCustomPeriodOption(context),
       ],
     );
   }
 
-  Widget _buildFilterOption(BuildContext context, String label, int type, IconData icon) {
+  Widget _buildFilterOption(
+      BuildContext context, String label, int type, IconData icon) {
     final isSelected = selectedType == type;
     final theme = Theme.of(context);
-    
+
     return InkWell(
       onTap: () => context
           .read<DiagramBloc>()
           .add(DiagramSelectTypeViewEvent(type: type)),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : AppColors.background,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: isSelected ? [
-            BoxShadow(
-              color: AppColors.primary.withOpacity(0.3),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ] : null,
+          color: isSelected
+              ? AppColors.primary.withOpacity(0.56)
+              : AppColors.background,
+          borderRadius: BorderRadius.circular(11),
+          border: Border.all(
+            color: isSelected
+                ? AppColors.lightPrimary.withOpacity(0.62)
+                : Colors.transparent,
+          ),
         ),
         child: Text(
           label,
-          style: isSelected 
+          style: isSelected
               ? theme.textTheme.labelMedium?.copyWith(color: Colors.white)
               : theme.textTheme.labelMedium,
         ),
@@ -181,30 +177,30 @@ class _FilterSelection extends StatelessWidget {
   Widget _buildCustomPeriodOption(BuildContext context) {
     final isSelected = selectedType == 3;
     final theme = Theme.of(context);
-    
+
     // Отображаем диапазон дат вместо слова "Период", если период выбран
-    final text = customPeriod != null 
+    final text = customPeriod != null
         ? '${customPeriod!.dateFrom.formatShortDate} - ${customPeriod!.dateTo.formatShortDate}'
         : t.diagram.periodBtn;
-    
+
     return InkWell(
       onTap: () => _showDateRangePicker(context),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : AppColors.background,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: isSelected ? [
-            BoxShadow(
-              color: AppColors.primary.withOpacity(0.3),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ] : null,
+          color: isSelected
+              ? AppColors.primary.withOpacity(0.56)
+              : AppColors.background,
+          borderRadius: BorderRadius.circular(11),
+          border: Border.all(
+            color: isSelected
+                ? AppColors.lightPrimary.withOpacity(0.62)
+                : Colors.transparent,
+          ),
         ),
         child: Text(
           text,
-          style: isSelected 
+          style: isSelected
               ? theme.textTheme.labelMedium?.copyWith(color: Colors.white)
               : theme.textTheme.labelMedium,
         ),
